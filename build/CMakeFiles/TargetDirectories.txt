@@ -1,0 +1,3 @@
+/home/zcj/school/linux/work1/build/CMakeFiles/test.dir
+/home/zcj/school/linux/work1/build/CMakeFiles/edit_cache.dir
+/home/zcj/school/linux/work1/build/CMakeFiles/rebuild_cache.dir

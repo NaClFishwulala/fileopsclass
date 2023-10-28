@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/test.dir/CFileTest.cpp.o CMakeFiles/test.dir/CFileStatus.cpp.o CMakeFiles/test.dir/CFileOps.cpp.o -o test 
