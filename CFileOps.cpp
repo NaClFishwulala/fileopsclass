@@ -27,6 +27,7 @@ CFileOps::~CFileOps()
 
 CFileOps& CFileOps::GetInstance()
 {
+    // 使用static确保只会声明一次CFileOps类
     static CFileOps m_pFile;
     return m_pFile;
 }
