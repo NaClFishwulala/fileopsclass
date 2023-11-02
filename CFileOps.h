@@ -16,6 +16,8 @@ private:
 private:
     CFileOps(); // 当构造函数为私有成员时，要想在类外部声明访问就必须使用单例设计模式，借助public的static CFileOps* GetInstance()来访问
     ~CFileOps();
+
+    CFileStatus MyFileLseek();
 public:
 
     static CFileOps& GetInstance();
@@ -23,7 +25,6 @@ public:
     CFileStatus MyFileOpen();
     CFileStatus MyFileRead(size_t bytes);
     CFileStatus MyFileWrite();
-    CFileStatus MyFileLseek();
     CFileStatus MyFileClose();
 };
 
