@@ -5,11 +5,11 @@ class CFileStatus
 {
 private:
     bool m_bReturnCode; //true表示文件操作成功，false表示文件操作失败
-	long m_lErrorCode;  //保留
+	long m_lErrorCode;  //读写文件时，表示实际读写的字节数
 
 public:
 	const bool& m_cbReturnCode; //引用声明
-	const long& m_clErrorCode;  //保留
+	const long& m_clErrorCode;  
 
 public:
     CFileStatus(bool bReturnCode, long lErrorCode);
