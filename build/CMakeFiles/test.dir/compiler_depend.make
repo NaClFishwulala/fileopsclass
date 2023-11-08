@@ -198,6 +198,23 @@ CMakeFiles/test.dir/CFileOps.cpp.o: ../CFileOps.cpp \
   /usr/include/linux/close_range.h \
   /usr/include/string.h \
   /usr/include/strings.h \
+  /usr/include/x86_64-linux-gnu/sys/stat.h \
+  /usr/include/x86_64-linux-gnu/bits/statx.h \
+  /usr/include/linux/stat.h \
+  /usr/include/linux/types.h \
+  /usr/include/x86_64-linux-gnu/asm/types.h \
+  /usr/include/asm-generic/types.h \
+  /usr/include/asm-generic/int-ll64.h \
+  /usr/include/x86_64-linux-gnu/asm/bitsperlong.h \
+  /usr/include/asm-generic/bitsperlong.h \
+  /usr/include/linux/posix_types.h \
+  /usr/include/linux/stddef.h \
+  /usr/include/x86_64-linux-gnu/asm/posix_types.h \
+  /usr/include/x86_64-linux-gnu/asm/posix_types_64.h \
+  /usr/include/asm-generic/posix_types.h \
+  /usr/include/x86_64-linux-gnu/bits/statx-generic.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_statx_timestamp.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_statx.h \
   ../CFileOps.h \
   ../CFileStatus.h
 
@@ -397,6 +414,20 @@ CMakeFiles/test.dir/CFileTest.cpp.o: ../CFileTest.cpp \
 
 ../CFileOps.h:
 
+/usr/include/x86_64-linux-gnu/bits/statx-generic.h:
+
+/usr/include/x86_64-linux-gnu/asm/posix_types.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct_statx_timestamp.h:
+
+/usr/include/linux/posix_types.h:
+
+/usr/include/asm-generic/bitsperlong.h:
+
+/usr/include/linux/types.h:
+
+/usr/include/x86_64-linux-gnu/bits/statx.h:
+
 /usr/include/string.h:
 
 /usr/include/x86_64-linux-gnu/bits/unistd_ext.h:
@@ -426,6 +457,8 @@ CMakeFiles/test.dir/CFileTest.cpp.o: ../CFileTest.cpp \
 /usr/include/x86_64-linux-gnu/c++/11/bits/ctype_inline.h:
 
 /usr/include/c++/11/bits/streambuf_iterator.h:
+
+/usr/include/x86_64-linux-gnu/asm/types.h:
 
 /usr/include/c++/11/cwctype:
 
@@ -575,6 +608,10 @@ CMakeFiles/test.dir/CFileTest.cpp.o: ../CFileTest.cpp \
 
 /usr/include/c++/11/bits/alloc_traits.h:
 
+/usr/include/x86_64-linux-gnu/asm/posix_types_64.h:
+
+/usr/include/asm-generic/types.h:
+
 /usr/include/asm-generic/errno-base.h:
 
 /usr/include/c++/11/bits/char_traits.h:
@@ -595,6 +632,8 @@ CMakeFiles/test.dir/CFileTest.cpp.o: ../CFileTest.cpp \
 
 /usr/include/c++/11/ext/type_traits.h:
 
+/usr/include/linux/stddef.h:
+
 /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h:
 
 /usr/include/c++/11/iosfwd:
@@ -605,11 +644,15 @@ CMakeFiles/test.dir/CFileTest.cpp.o: ../CFileTest.cpp \
 
 /usr/include/c++/11/bits/stl_function.h:
 
+/usr/include/asm-generic/posix_types.h:
+
 /usr/include/stdc-predef.h:
 
 /usr/include/x86_64-linux-gnu/bits/libc-header-start.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h:
+
+/usr/include/x86_64-linux-gnu/sys/stat.h:
 
 /usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
 
@@ -644,6 +687,8 @@ CMakeFiles/test.dir/CFileTest.cpp.o: ../CFileTest.cpp \
 /usr/include/linux/errno.h:
 
 /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct_statx.h:
 
 /usr/include/x86_64-linux-gnu/bits/waitstatus.h:
 
@@ -685,6 +730,8 @@ CMakeFiles/test.dir/CFileTest.cpp.o: ../CFileTest.cpp \
 
 /usr/include/c++/11/bits/ptr_traits.h:
 
+/usr/include/asm-generic/int-ll64.h:
+
 /usr/include/c++/11/bits/ostream.tcc:
 
 /usr/include/c++/11/clocale:
@@ -716,6 +763,8 @@ CMakeFiles/test.dir/CFileTest.cpp.o: ../CFileTest.cpp \
 /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h:
 
 /usr/include/c++/11/bits/localefwd.h:
+
+/usr/include/x86_64-linux-gnu/asm/bitsperlong.h:
 
 /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h:
 
@@ -766,6 +815,8 @@ CMakeFiles/test.dir/CFileTest.cpp.o: ../CFileTest.cpp \
 /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h:
 
 /usr/include/x86_64-linux-gnu/bits/setjmp.h:
+
+/usr/include/linux/stat.h:
 
 /usr/include/c++/11/bits/locale_classes.h:
 

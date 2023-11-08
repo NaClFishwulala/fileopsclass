@@ -1,14 +1,15 @@
 #include "CFileStatus.h"
 
-CFileStatus::CFileStatus(bool bReturnCode, long lErrorCode) : m_cbReturnCode(m_bReturnCode), m_clErrorCode(m_lErrorCode)
+CFileStatus::CFileStatus(bool bReturnCode, long lByteSize) : m_cbReturnCode(m_bReturnCode), m_clByteSize(m_lByteSize)
 {
     m_bReturnCode = bReturnCode;
-    m_lErrorCode = lErrorCode;
+    m_lByteSize = lByteSize;
 }
-CFileStatus::CFileStatus(const CFileStatus& s) : m_cbReturnCode(m_bReturnCode), m_clErrorCode(m_lErrorCode)
+
+CFileStatus::CFileStatus(const CFileStatus& s) : m_cbReturnCode(m_bReturnCode), m_clByteSize(m_lByteSize)
 {
     m_bReturnCode = s.m_bReturnCode;
-    m_lErrorCode = s.m_lErrorCode;
+    m_lByteSize = s.m_lByteSize;
 }
 
 CFileStatus::~CFileStatus()
