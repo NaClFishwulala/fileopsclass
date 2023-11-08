@@ -8,25 +8,32 @@
 
 using namespace std;
 
-#define FILENAME "../readfile.txt"
+#define WRITEFILENAME "../writefile.txt"
+#define READFILENAME "../readfile.txt"
 #define BUFFER_SIZE_READ_FILE 4096
 #define BUFFER_SIZE_WRITE_FILE 4096
-#define MAX_SIZE 256
+#define MAX_SIZE 12288
 
 
 CFileOps::CFileOps()
 {
     // 打开文件
-    CFileStatus s = MyFileOpen();
-    if(!s.IsSuccess()) {
-        cout << "file open error" << endl;
+    CFileStatus sRead = MyReadFileOpen();
+    if(!sRead.IsSuccess()) {
+        cout << "readfile open error" << endl;
     }
-    cout << "file open success, m_Fd: " << m_Fd << endl;
+    cout << "readfile open success, m_Fd: " << m_ReadFd << endl;
     
     m_pReadBuffer = new char[BUFFER_SIZE_READ_FILE];    // 声明读文件缓存
     memset(m_pReadBuffer, 0, BUFFER_SIZE_READ_FILE);
     m_usedReadBufferSize = 0;
     readPos = 0;    // 读取文件偏移量
+
+    CFileStatus sWrite = MyWriteFileOpen();
+    if(!sWrite.IsSuccess()) {
+        cout << "writefile open error" << endl;
+    }
+    cout << "writefile open success, m_Fd: " << m_WriteFd << endl;
 
     m_pWriteBuffer = new char[BUFFER_SIZE_WRITE_FILE];  // 声明写文件缓存
     memset(m_pWriteBuffer, 0, BUFFER_SIZE_WRITE_FILE);
@@ -36,11 +43,17 @@ CFileOps::CFileOps()
 CFileOps::~CFileOps()
 {
     OnProcessExit();
-    CFileStatus s = MyFileClose();
-    if(!s.IsSuccess()) {
-        cout << "file close error" << endl;
+    CFileStatus sRead = MyReadFileClose();
+    if(!sRead.IsSuccess()) {
+        cout << "readfile close error" << endl;
     }
-    cout << "file close success" << endl;
+    cout << "readfile close success" << endl;
+
+    CFileStatus sWrite = MyWriteFileClose();
+    if(!sWrite.IsSuccess()) {
+        cout << "writefile close error" << endl;
+    }
+    cout << "writefile close success" << endl;
 }
 
 CFileOps& CFileOps::GetInstance()
@@ -50,19 +63,39 @@ CFileOps& CFileOps::GetInstance()
     return m_pFile;
 }
 
-CFileStatus CFileOps::MyFileOpen() 
+CFileStatus CFileOps::MyReadFileOpen() 
 {
-    m_Fd = open(FILENAME, O_RDWR | O_APPEND | O_CREAT, S_IRUSR | S_IWUSR); //当open的第二个参数使用了O_CREAT, open还需要第三个参数指定新文件的访问权限位
-    if(m_Fd == -1) {
+    m_ReadFd = open(READFILENAME, O_RDWR | O_APPEND | O_CREAT, S_IRUSR | S_IWUSR); //当open的第二个参数使用了O_CREAT, open还需要第三个参数指定新文件的访问权限位
+    if(m_ReadFd == -1) {
         return CFileStatus(false, -1);
     }
     return CFileStatus(true, -1);
 }
 
-CFileStatus CFileOps::MyFileClose()
+CFileStatus CFileOps::MyWriteFileOpen()
 {
-    if(m_Fd != -1) {
-        int returncode = close(m_Fd);
+    m_WriteFd = open(WRITEFILENAME, O_RDWR | O_APPEND | O_CREAT, S_IRUSR | S_IWUSR); //当open的第二个参数使用了O_CREAT, open还需要第三个参数指定新文件的访问权限位
+    if(m_WriteFd == -1) {
+        return CFileStatus(false, -1);
+    }
+    return CFileStatus(true, -1);    
+}
+
+CFileStatus CFileOps::MyReadFileClose()
+{
+    if(m_ReadFd != -1) {
+        int returncode = close(m_ReadFd);
+        if(returncode != -1) {
+            return CFileStatus(true, -1);
+        }
+    }
+    return CFileStatus(false, -1);
+}
+
+CFileStatus CFileOps::MyWriteFileClose() 
+{
+    if(m_WriteFd != -1) {
+        int returncode = close(m_WriteFd);
         if(returncode != -1) {
             return CFileStatus(true, -1);
         }
@@ -87,7 +120,7 @@ CFileStatus CFileOps::MyFileRead(size_t bytes)
 CFileStatus CFileOps::MyFileReadOps(size_t bytes)
 {
     cout << "MyFileReadOps: " << bytes << endl;
-    size_t readBytes = read(m_Fd, m_pReadBuffer, bytes);
+    size_t readBytes = read(m_ReadFd, m_pReadBuffer, bytes);
     if(readBytes == -1) {
         cout << "file read error" << endl;
         return CFileStatus(false, -1);
@@ -102,12 +135,13 @@ CFileStatus CFileOps::MyFileReadOps(size_t bytes)
     return CFileStatus(true, readBytes);
 }
 
-CFileStatus CFileOps::MyFileWrite()
+CFileStatus CFileOps::MyFileWrite(char* buf)
 {
-    char buf[MAX_SIZE];
-    cout << "Please enter buf to write into file:";
-    scanf("%s", buf);
+    // char buf[MAX_SIZE];
+    // cout << "Please enter buf to write into file:";
+    // scanf("%s", buf);
     unsigned int bufSize = strlen(buf);
+    cout << "bufSize: " << bufSize << endl;
     unsigned int totoal_size = m_usedWriteBufferSize + bufSize;
     size_t writeBytes = 0;
 
@@ -116,12 +150,12 @@ CFileStatus CFileOps::MyFileWrite()
         unsigned int lefBufferSize = BUFFER_SIZE_WRITE_FILE - m_usedWriteBufferSize;
         memcpy(m_pWriteBuffer + m_usedWriteBufferSize, buf, lefBufferSize);
         m_usedWriteBufferSize += lefBufferSize;
-        CFileStatus s = MyFileWriteOps(m_pWriteBuffer);
+        CFileStatus s = MyFileWriteOps(m_pWriteBuffer, m_usedWriteBufferSize);
         writeBytes += s.m_clByteSize;
         m_usedWriteBufferSize = 0;
         totoal_size -= BUFFER_SIZE_WRITE_FILE;
         if(totoal_size >= BUFFER_SIZE_WRITE_FILE) {
-            CFileStatus s2 = MyFileWriteOps(buf + lefBufferSize);
+            CFileStatus s2 = MyFileWriteOps(buf + lefBufferSize, totoal_size);
             writeBytes += s2.m_clByteSize;
             return CFileStatus(true, writeBytes);
         } else {
@@ -138,7 +172,7 @@ CFileStatus CFileOps::MyFileWrite()
 
 CFileStatus CFileOps::MyFileLseek()
 {
-    lseek(m_Fd, readPos, SEEK_SET);
+    lseek(m_ReadFd, readPos, SEEK_SET);
     cout << "current position: " << readPos << endl;
     return CFileStatus(true, readPos);
 }
@@ -149,16 +183,16 @@ size_t CFileOps::GetFileSize()
 	struct stat statbuf;
 
 	// 提供文件名字符串，获得文件属性结构体
-	stat(FILENAME, &statbuf);
+	stat(READFILENAME, &statbuf);
 	
 	// 获取文件大小
 	size_t filesize = statbuf.st_size;
     return filesize;
 }
 
-CFileStatus CFileOps::MyFileWriteOps(char* message)
+CFileStatus CFileOps::MyFileWriteOps(char* message, size_t message_len)
 {
-    size_t writeBytes = write(m_Fd, message, strlen(message));  
+    size_t writeBytes = write(m_WriteFd, message, message_len);  
     if(writeBytes == -1) {
         cout << "from buffer write error" << endl;
         return CFileStatus(false, -1);
@@ -171,7 +205,8 @@ void CFileOps::FlushBuffer()
 {
     MyFileReadOps(m_usedReadBufferSize);
     cout << "Content is: " << fileContent << endl;
-    MyFileWriteOps(m_pWriteBuffer);
+    MyFileWrite((char*)fileContent.c_str());
+    MyFileWriteOps(m_pWriteBuffer, m_usedWriteBufferSize);
     return;
 }
 
