@@ -12,7 +12,6 @@ using namespace std;
 #define READFILENAME "../readfile.txt"
 #define BUFFER_SIZE_READ_FILE 4096
 #define BUFFER_SIZE_WRITE_FILE 4096
-#define MAX_SIZE 12288
 
 
 CFileOps::CFileOps()
@@ -137,9 +136,6 @@ CFileStatus CFileOps::MyFileReadOps(size_t bytes)
 
 CFileStatus CFileOps::MyFileWrite(char* buf)
 {
-    // char buf[MAX_SIZE];
-    // cout << "Please enter buf to write into file:";
-    // scanf("%s", buf);
     unsigned int bufSize = strlen(buf);
     cout << "bufSize: " << bufSize << endl;
     unsigned int totoal_size = m_usedWriteBufferSize + bufSize;
